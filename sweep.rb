@@ -30,7 +30,9 @@ class ConfigLoader
             'music' => ['mp3', 'flac', 'mp4'],
             'docs' => ['pdf'],
             'zips' => ['zip', 'gz', 'bz2'],
-            'apps' => ['dmg']
+            'apps' => ['dmg'],
+            'images' => ['jpg','png','bmp'],
+            'videos' => ['mov', 'avi', 'm4v']
         }
     end
 
@@ -95,13 +97,20 @@ class Sweeper
                     #if not, create it
                     target_dir = @folder + "/" + m[ext]
                     puts "Moving #{file} to #{target_dir}"
-                    
+
                     #Move the file into the folder
                     FileUtils.mkdir_p(target_dir) unless Dir.exists?(target_dir)
                     FileUtils.move(file, "#{target_dir}/#{file}")
-                    
+                else
+                    unmapped.push file
                 end
             end
+        end
+
+        puts ""
+        puts "Unable to clean up:"
+        unmapped.each do |f|
+            puts f
         end
     end
 
