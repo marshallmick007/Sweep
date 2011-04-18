@@ -10,6 +10,13 @@ DEFAULT_CONFIG='~/' + CONFIG_FILE
 
 class ConfigLoader
     
+    def init(folder)
+        s = Sweeper.new(folder)
+        s.mapping = load(s)
+        
+        s
+    end
+
     def load(sweeper)
         f = sweeper.which_config
         cfg = default
@@ -49,12 +56,13 @@ end
 
 class Sweeper
 
+    attr_accessor :folder
+    attr_accessor :mapping
+    attr_accessor :config
+
     def initialize(folder)
         @folder = folder
     end
-
-    attr_accessor :folder
-    attr_accessor :mapping
 
     def local_config_exists?
         return File.exists? local_config_file
@@ -155,13 +163,11 @@ if ARGV.empty?
 end
 
 ARGV.each do |a|
-    #TODO: Refactor classes to better bootstrap this process
-    s = Sweeper.new(a)
+
     cl = ConfigLoader.new
-    cfg = cl.load(s)
-    #cl.testoutput(cfg)
-    s.mapping = cfg
-    #puts "Arg #{a}"
+
+    s = cl.init a
+
     s.sweep
 end
 
