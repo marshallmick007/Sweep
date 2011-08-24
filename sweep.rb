@@ -59,6 +59,8 @@ class ConfigLoader
     end
 end
 
+# Class which inspects the target folder and sweeps files
+# which match a mapping into the appropriate folder(s)
 class Sweeper
 
     attr_accessor :folder
@@ -106,9 +108,11 @@ class Sweeper
     def sweep
         m = map_config
         unmapped = []
+        # For each file in the folder @folder
         Dir.foreach @folder do |file|
-            FileUtils.cd @folder
+            FileUtils.cd @folder 
 
+            # If we are indeed looking at a file and not a directory
             if File.file?(file)
                 ext = File.extname(file).downcase
                 ext.slice!(0)
@@ -133,8 +137,13 @@ class Sweeper
             puts f
         end
     end
+end
 
-    def test_map
+# Performs a test sweep against the target directory, 
+# using the target config mappings. No files are moved
+# during this process
+class TestSweeper < Sweeper
+    def sweep
         m = map_config
         m.each do |k,v|
             puts "#{k}: #{v}"
@@ -162,12 +171,14 @@ class Sweeper
             puts "#{ext}: #{file}"
         end
 
+        puts ""
+        puts "Unable to clean up:"
         unmapped.each do |f|
             puts f
         end
     end
-end
 
+end
 
 if ARGV.empty?
     #display usage
