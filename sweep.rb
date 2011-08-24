@@ -7,16 +7,19 @@ require 'yaml'
 CONFIG_FILE = '.sweep.yaml'
 DEFAULT_CONFIG='~/' + CONFIG_FILE
 
-
+# Class to handle loading of a config file into
+# a Sweeper object
 class ConfigLoader
     
-    def init(folder)
+    # Creates a Sweeper class for the specified folder
+    def create(folder)
         s = Sweeper.new(folder)
         s.mapping = load(s)
         
         s
     end
 
+    # Loads the sweeper with the appropriate configuration
     def load(sweeper)
         f = sweeper.which_config
         cfg = default
@@ -32,6 +35,7 @@ class ConfigLoader
         cfg
     end
 
+    # Returns the default sweep mappings
     def default
         {
             'music' => ['mp3', 'flac', 'mp4'],
@@ -43,6 +47,7 @@ class ConfigLoader
         }
     end
 
+    # Tests the mappings were loaded properly
     def testoutput(cfg)
         #puts default.class
         cfg.each do |key, value|
@@ -64,14 +69,18 @@ class Sweeper
         @folder = folder
     end
 
+    # Does a config file exist in the target directory?
     def local_config_exists?
         return File.exists? local_config_file
     end
 
+    # Loads the config file from the target directory
     def local_config_file
          File.join(File.expand_path(@folder), CONFIG_FILE)
     end
 
+    # Returns either the config file from the target directory
+    # if it exists, or the default config file
     def which_config
         if local_config_exists?
             local_config_file
@@ -80,6 +89,7 @@ class Sweeper
         end
     end
 
+    # Loads the config file category mappings
     def map_config
         m = Hash.new
         @mapping.each do |k,v|
@@ -91,6 +101,8 @@ class Sweeper
         m
     end
 
+    # Move files in the target directory to the cleaned up
+    # folders specified in the map_config
     def sweep
         m = map_config
         unmapped = []
@@ -164,9 +176,9 @@ end
 
 ARGV.each do |a|
 
-    cl = ConfigLoader.new
+    loader = ConfigLoader.new
 
-    s = cl.init a
+    s = loader.create a
 
     s.sweep
 end
