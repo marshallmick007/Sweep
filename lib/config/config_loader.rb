@@ -56,10 +56,10 @@ module Sweep
 
         if cfg[:version] == nil
           puts "Version 1.0 config file found"
-          newcfg = {:version => "2.0", :types => cfg}
+          newcfg = {:version => "2.0", :types => cfg, :patterns => {}}
+          #puts newcfg
           cfg = newcfg
         end
-
 
         cfg
       end
@@ -74,7 +74,10 @@ module Sweep
           'zips' => ['zip', 'gz', 'bz2'],
           'apps' => ['dmg'],
           'images' => ['jpg','png','bmp'],
-          'videos' => ['mov', 'avi', 'm4v'] }
+          'videos' => ['mov', 'avi', 'm4v'] },
+          patterns: {
+          'receipts' => [/receipt/i, /confirmation/i]
+          }
         }
       end
 
