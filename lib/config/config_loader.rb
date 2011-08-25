@@ -54,18 +54,27 @@ module Sweep
           end
         end
 
+        if cfg[:version] == nil
+          puts "Version 1.0 config file found"
+          newcfg = {:version => "2.0", :types => cfg}
+          cfg = newcfg
+        end
+
+
         cfg
       end
 
       # Returns the default sweep mappings
       def self.default
         {
+          version: 2.0,
+          types: {
           'music' => ['mp3', 'flac', 'mp4'],
           'docs' => ['pdf'],
           'zips' => ['zip', 'gz', 'bz2'],
           'apps' => ['dmg'],
           'images' => ['jpg','png','bmp'],
-          'videos' => ['mov', 'avi', 'm4v']
+          'videos' => ['mov', 'avi', 'm4v'] }
         }
       end
 

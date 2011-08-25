@@ -15,7 +15,7 @@ module Sweep
     # Loads the config file category mappings
     def map_config
       m = Hash.new
-      @mapping.each do |k,v|
+      @mapping[:types].each do |k,v|
         v.each do |ext|
           m[ext] = k
         end
