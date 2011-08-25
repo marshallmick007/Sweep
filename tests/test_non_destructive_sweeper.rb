@@ -1,8 +1,8 @@
 require './test_helper'
 
 def test_downloads_non_descructive
-  loader = Sweeper::Config::ConfigLoader.new '~/Documents'
-  sweeper = Sweeper::LogOnlySweeper.new loader.config
+  loader = Sweep::Config::ConfigLoader.new File.expand_path('~/Documents')
+  sweeper = Sweep::LogOnlySweeper.new loader
 
   sweeper.sweep
 end

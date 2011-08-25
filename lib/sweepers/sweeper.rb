@@ -1,14 +1,15 @@
 require 'fileutils'
 
-module Sweeper
+module Sweep
   class Sweeper
 
-    #attr_accessor :folder
+    attr_accessor :folder
     attr_accessor :mapping
-    attr_accessor :config
+    #attr_accessor :config
 
-    def initialize(config)
-      @config = config
+    def initialize(config_loader)
+      @folder = config_loader.folder
+      @mapping = config_loader.config
     end
 
     # Loads the config file category mappings
@@ -29,8 +30,8 @@ module Sweeper
       m = map_config
       unmapped = []
       # For each file in the folder @folder
-      Dir.foreach @config.folder do |file|
-        FileUtils.cd @config.folder 
+      Dir.foreach @folder do |file|
+        FileUtils.cd @folder 
 
         # If we are indeed looking at a file and not a directory
         if File.file?(file)
@@ -39,7 +40,7 @@ module Sweeper
           if m.key?(ext)
             #Check to make sure that m.value folder exists
             #if not, create it
-            target_dir = @config.folder + "/" + m[ext]
+            target_dir = @folder + "/" + m[ext]
             puts "Moving #{file} to #{target_dir}"
 
             #Move the file into the folder

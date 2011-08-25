@@ -1,7 +1,7 @@
 require 'fileutils'
 require 'yaml'
 
-module Sweeper
+module Sweep
   module Config
     CONFIG_FILE = '.sweep.yaml'
     DEFAULT_CONFIG='~/' + CONFIG_FILE

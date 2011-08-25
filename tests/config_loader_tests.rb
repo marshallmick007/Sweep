@@ -11,13 +11,13 @@ def test_output(cfg)
 end
 
 def test_default_map
-  loader = Sweeper::Config::ConfigLoader.new
+  loader = Sweep::Config::ConfigLoader.new
 
-  test_output Sweeper::Config::ConfigLoader.default
+  test_output Sweep::Config::ConfigLoader.default
 end
 
 def test_current_dir
-  loader = Sweeper::Config::ConfigLoader.new
+  loader = Sweep::Config::ConfigLoader.new
   cfg = loader.load('.')
   test_output cfg
 end

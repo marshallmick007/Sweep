@@ -1,6 +1,6 @@
 require 'fileutils'
 
-module Sweeper
+module Sweep
   # Performs a test sweep against the target directory, 
   # using the target config mappings. No files are moved
   # during this process
@@ -12,8 +12,8 @@ module Sweeper
       end
       filemap = Hash.new
       unmapped = []
-      Dir.foreach @config.folder do |file|
-        FileUtils.cd @config.folder
+      Dir.foreach @folder do |file|
+        FileUtils.cd @folder
 
         if File.file?(file)
           ext = File.extname(file).downcase
