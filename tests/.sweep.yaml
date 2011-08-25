@@ -1,0 +1,6 @@
+music: [mp3, flac, mp4]
+docs: [pdf]
+zips: [zip, gz]
+apps: [dmg]
+images: [png, jpg]
+video: [mov, avi, m4v]
