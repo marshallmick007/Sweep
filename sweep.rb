@@ -9,20 +9,29 @@ require 'sweep'
 
 if ARGV.empty?
   #display usage
-  puts "Please supply a folder to sweep"
+  #puts "Please supply a folder to sweep"
+  puts "Usage: sweep.rb [OPTIONS] [DIRECTORIES]"
+  puts "OPTIONS:"
+  puts "        --force   Force the file move"
   exit
 end
 
+dirs = []
+mode=:test
+
 ARGV.each do |a|
-
-  if File.directory? a 
-    loader = Sweep::Config::ConfigLoader.new a
-
-    sweeper = Sweep::Sweeper.new loader
-
-    sweeper.sweep
-  else
-    puts "#{a} is not a directory"
+  if a == "--force"
+    mode = :force
+  elsif a == "--prompt"
+    mode = :prompt
+  elsif File.directory? a
+    dirs << a
   end
-
 end
+
+dirs.each do |folder|
+  loader = Sweep::Config::ConfigLoader.new folder
+  sweeper = Sweep::Sweeper.new loader
+  sweeper.sweep mode
+end
+

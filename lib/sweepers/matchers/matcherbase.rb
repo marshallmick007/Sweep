@@ -3,13 +3,13 @@ module Sweep
     class MatcherBase
       attr_accessor :basedir
       # Process a match
-      def process(match)
-        puts "Moving " + match.file + " -> " + match.destination
-
-        #Move the file into the folder
-        #FileUtils.mkdir_p(target_dir) unless Dir.exists?(target_dir)
-        #FileUtils.move(file, "#{target_dir}/#{file}")
-
+      def process(match, mode=:test)
+        if mode != :test
+          puts "Moving " + match.file + " -> " + match.destination
+          #Move the file into the folder
+          FileUtils.mkdir_p(match.destination) unless Dir.exists?(match.destination)
+          FileUtils.move(match.file, "#{match.destination}/#{match.file}")
+        end
       end
 
       def compute_destination(destination)

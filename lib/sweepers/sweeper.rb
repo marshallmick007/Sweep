@@ -46,17 +46,18 @@ module Sweep
     # Loads the config file category mappings
     def map_config_extensions
       @extensions = Hash.new
-      @config[:types].each do |k,v|
+      @config["types"].each do |k,v|
+        puts "#{k} => #{v}"
         v.each do |ext|
           @extensions[ext] = k
         end
-      end 
+      end
       return @extensions
     end
 
     def map_config_patterns
       @patterns = Hash.new
-      @config[:patterns].each do |k,v|
+      @config["patterns"].each do |k,v|
         v.each do |pattern|
           @patterns[pattern] = k
         end
@@ -66,11 +67,11 @@ module Sweep
 
     # Move files in the target directory to the cleaned up
     # folders specified in the map_config
-    def sweep
+    def sweep(mode=:test)
       unmapped = []
       # For each file in the folder @folder
       Dir.foreach @folder do |file|
-        FileUtils.cd @folder 
+        FileUtils.cd @folder
         h = [:patterns, :types, :unhandled]
 
         # If we are indeed looking at a file and not a directory
@@ -79,11 +80,11 @@ module Sweep
           h.each do |key|
             unless handled
               match =  @handlers[key].is_match? file
-             
+
               if match
                 puts "Match for #{file} -> #{match.destination}"
                 handled = true
-                @handlers[key].process match
+                @handlers[key].process match, mode
               end
             end
           end
@@ -116,7 +117,7 @@ module Sweep
     end
 
     def handle_pattern_match(file)
-      handled = PatternMatcher.new.is_match?(file, @config[:patterns])
+      handled = PatternMatcher.new.is_match?(file, @config["patterns"])
     end
 
     def handle_extension_match(file)

@@ -8,10 +8,10 @@ module Sweep
       # for each regex in pattern list, 
       # does the file match the pattern?
       def is_match?(file)
-        return Match.new file, ''
+        return Match.new file, 'No Destinatin for file'
       end
 
-      def process(match)
+      def process(match,mode=:test)
         @files.push match.file
       end
 

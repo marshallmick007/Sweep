@@ -1,0 +1,27 @@
+---
+  version: 2
+  types: 
+    music: 
+      - "mp3"
+      - "flac"
+      - "mp4"
+    docs: 
+      - "pdf"
+    zips: 
+      - "zip"
+      - "gz"
+      - "bz2"
+    apps: 
+      - "dmg"
+    autonzb: 
+      - "nzb"
+    images: 
+      - "jpg"
+      - "png"
+      - "bmp"
+    videos: 
+      - "mov"
+      - "avi"
+      - "m4v"
+  patterns: {}
+

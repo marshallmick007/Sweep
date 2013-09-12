@@ -53,8 +53,7 @@ module Sweep
             cfg = ConfigLoader.default
           end
         end
-
-        if cfg[:version] == nil
+        if cfg["version"] == nil
           puts "Version 1.0 config file found"
           newcfg = {:version => "2.0", :types => cfg, :patterns => {}}
           #puts newcfg
