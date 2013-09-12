@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
-dir = File.dirname(__FILE__)
+require 'pathname'
+me = dir = File.dirname( Pathname.new(__FILE__).realpath.to_s )
 lib = File.expand_path(File.join(dir, 'lib'))
 
 $LOAD_PATH << lib
